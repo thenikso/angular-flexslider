@@ -7,7 +7,6 @@
     "jquery": "2.0.2",
     "flexslider": "a4647edaf7d44a32b1d568cef570128b8d28403b"
   },
-  "gitHead": "d9233112eb862a05338146967b75142fed8c4f12",
   "readme": "angular-flexslider\n======================\n\nbower repo for angular-flexslider.js",
   "readmeFilename": "README.md",
   "_id": "angular-flexslider@1.0.0",
