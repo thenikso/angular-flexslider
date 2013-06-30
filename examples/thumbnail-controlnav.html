@@ -1,0 +1,37 @@
+<html ng-app="BasicSlider">
+<head>
+	<title>Angular Flexlider Example - Basic Slider</title>
+	<link rel="stylesheet" type="text/css" href="../components/flexslider/flexslider.css">
+	<style type="text/css">
+	.flexslider-container {
+		width: 50%;
+		margin: 10px auto;
+	}
+	</style>
+</head>
+<body ng-controller="BasicSliderCtrl">
+
+	<flex-slider slide="s in slides" animation="slide" control-nav="thumbnails">
+		<li data-thumb="{{s}}">
+			<img ng-src="{{s}}">
+		</li>
+	</flex-slider>
+
+	<script src="../components/jquery/jquery.js"></script>
+	<script src="../components/flexslider/jquery.flexslider.js"></script>
+	<script src="../components/angular/angular.js"></script>
+	<script src="../angular-flexslider.js"></script>
+	<script type="text/javascript">
+	angular.module('BasicSlider', ['angular-flexslider'])
+		.controller('BasicSliderCtrl', function($scope, $timeout) {
+			$scope.slides = [
+				'http://flexslider.woothemes.com/images/kitchen_adventurer_cheesecake_brownie.jpg',
+				'http://flexslider.woothemes.com/images/kitchen_adventurer_lemon.jpg',
+				'http://flexslider.woothemes.com/images/kitchen_adventurer_donut.jpg',
+				'http://flexslider.woothemes.com/images/kitchen_adventurer_caramel.jpg'
+			];
+		});
+	</script>
+
+</body>
+</html>

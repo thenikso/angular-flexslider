@@ -1,0 +1,64 @@
+<html ng-app="BasicSlider">
+<head>
+	<title>Angular Flexlider Example - Basic Slider</title>
+	<link rel="stylesheet" type="text/css" href="../components/flexslider/flexslider.css">
+	<style type="text/css">
+	.flexslider-container {
+		width: 50%;
+		margin: 10px auto;
+	}
+	</style>
+</head>
+<body ng-controller="BasicSliderCtrl">
+
+	<flex-slider
+		slide="s in slideshow.slides"
+		animation="slide"
+		start="slideshow.start()"
+		before="slideshow.before()"
+		after="slideshow.after()"
+		end="slideshow.end()">
+		<li>
+			<img ng-src="{{s}}">
+		</li>
+	</flex-slider>
+
+	<div>
+		<p>Callbacks:</p>
+		<ul>
+			<li ng-repeat="l in slideshow.log">{{l}}</li>
+		</ul>
+	</div>
+
+	<script src="../components/jquery/jquery.js"></script>
+	<script src="../components/flexslider/jquery.flexslider.js"></script>
+	<script src="../components/angular/angular.js"></script>
+	<script src="../angular-flexslider.js"></script>
+	<script type="text/javascript">
+	angular.module('BasicSlider', ['angular-flexslider'])
+		.controller('BasicSliderCtrl', function($scope) {
+			$scope.slideshow = {}
+			$scope.slideshow.slides = [
+				'http://flexslider.woothemes.com/images/kitchen_adventurer_cheesecake_brownie.jpg',
+				'http://flexslider.woothemes.com/images/kitchen_adventurer_lemon.jpg',
+				'http://flexslider.woothemes.com/images/kitchen_adventurer_donut.jpg',
+				'http://flexslider.woothemes.com/images/kitchen_adventurer_caramel.jpg'
+			];
+			$scope.slideshow.log = []
+			$scope.slideshow.start = function(){
+				$scope.slideshow.log.push('start');
+			}
+			$scope.slideshow.before = function(){
+				$scope.slideshow.log.push('before');
+			}
+			$scope.slideshow.after = function(){
+				$scope.slideshow.log.push('after');
+			}
+			$scope.slideshow.end = function(){
+				$scope.slideshow.log.push('end');
+			}
+		});
+	</script>
+
+</body>
+</html>

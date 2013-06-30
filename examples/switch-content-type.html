@@ -1,0 +1,39 @@
+<html ng-app="BasicSlider">
+<head>
+	<title>Angular Flexlider Example - Basic Slider</title>
+	<link rel="stylesheet" type="text/css" href="../components/flexslider/flexslider.css">
+	<style type="text/css">
+	.flexslider-container {
+		width: 50%;
+		margin: 10px auto;
+	}
+	</style>
+</head>
+<body ng-controller="BasicSliderCtrl">
+
+	<flex-slider slide="s in slides" animation="slide">
+		<li ng-switch="s.type">
+			<iframe ng-switch-when="video" ng-src="{{s.url}}" width="100%" height="400" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+			<img ng-switch-default ng-src="{{s.url}}">
+		</li>
+	</flex-slider>
+
+	<script src="../components/jquery/jquery.js"></script>
+	<script src="../components/flexslider/jquery.flexslider.js"></script>
+	<script src="../components/angular/angular.js"></script>
+	<script src="../angular-flexslider.js"></script>
+	<script type="text/javascript">
+	angular.module('BasicSlider', ['angular-flexslider'])
+		.controller('BasicSliderCtrl', function($scope) {
+			$scope.slides = [
+				{ type: 'video', url: 'http://player.vimeo.com/video/39683393?api=1&player_id=player_1' },
+				{ type: 'image', url: 'http://flexslider.woothemes.com/images/kitchen_adventurer_cheesecake_brownie.jpg'},
+				{ type: 'image', url: 'http://flexslider.woothemes.com/images/kitchen_adventurer_lemon.jpg'},
+				{ type: 'image', url: 'http://flexslider.woothemes.com/images/kitchen_adventurer_donut.jpg'},
+				{ type: 'image', url: 'http://flexslider.woothemes.com/images/kitchen_adventurer_caramel.jpg'},
+			];
+		});
+	</script>
+
+</body>
+</html>
