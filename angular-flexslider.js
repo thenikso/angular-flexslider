@@ -57,10 +57,10 @@
                 continue;
               }
               if (attrKey === 'start' || attrKey === 'before' || attrKey === 'after' || attrKey === 'end' || attrKey === 'added' || attrKey === 'removed') {
-                $attr[attrKey] = (function(evalExp) {
+                $attr[attrKey] = (function(attrVal) {
                   return function() {
                     return $scope.$apply(function() {
-                      return $scope.$eval(evalExp);
+                      return $scope.$eval(attrVal);
                     });
                   };
                 })(attrVal);

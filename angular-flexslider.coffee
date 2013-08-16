@@ -51,7 +51,7 @@ angular.module('angular-flexslider', [])
 						$attr[attrKey] = attrVal is 'true'
 						continue
 					if attrKey in ['start', 'before', 'after', 'end', 'added', 'removed']
-						$attr[attrKey] = ((evalExp) -> ->
-							$scope.$apply -> $scope.$eval evalExp)(attrVal)
+						$attr[attrKey] = do (attrVal) -> ->
+							$scope.$apply -> $scope.$eval attrVal
 						continue
 				setTimeout (-> $scope.$apply -> flexsliderDiv.flexslider $attr), 0
