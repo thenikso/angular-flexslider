@@ -16,7 +16,7 @@
           collectionString = match[2];
           elementsScopes = [];
           flexsliderDiv = null;
-          return $scope.$watch(collectionString, function(collection) {
+          return $scope.$watchCollection(collectionString, function(collection) {
             var attrKey, attrVal, c, childScope, e, n, slides, _i, _j, _len, _len1;
 
             if (elementsScopes.length > 0 || (flexsliderDiv != null)) {
@@ -59,9 +59,11 @@
               if (attrKey === 'start' || attrKey === 'before' || attrKey === 'after' || attrKey === 'end' || attrKey === 'added' || attrKey === 'removed') {
                 $attr[attrKey] = (function(attrVal) {
                   return function() {
-                    return $scope.$apply(function() {
-                      return $scope.$eval(attrVal);
-                    });
+                    return setTimeout((function() {
+                      return $scope.$apply(function() {
+                        return $scope.$eval(attrVal);
+                      });
+                    }), 0);
                   };
                 })(attrVal);
                 continue;

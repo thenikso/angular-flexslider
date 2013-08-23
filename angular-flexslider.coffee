@@ -14,7 +14,7 @@ angular.module('angular-flexslider', [])
 			elementsScopes = []
 			flexsliderDiv = null
 
-			$scope.$watch collectionString, (collection) ->
+			$scope.$watchCollection collectionString, (collection) ->
 				# Remove old flexslider
 				if elementsScopes.length > 0 or flexsliderDiv?
 					$element.children().remove()
@@ -52,6 +52,6 @@ angular.module('angular-flexslider', [])
 						continue
 					if attrKey in ['start', 'before', 'after', 'end', 'added', 'removed']
 						$attr[attrKey] = do (attrVal) -> ->
-							$scope.$apply -> $scope.$eval attrVal
+							setTimeout (-> $scope.$apply -> $scope.$eval attrVal), 0
 						continue
 				setTimeout (-> $scope.$apply -> flexsliderDiv.flexslider $attr), 0
