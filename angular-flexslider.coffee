@@ -14,9 +14,7 @@ angular.module('angular-flexslider', [])
 			trackBy = if angular.isDefined(match[3]) then $parse(match[3]) else $parse("#{indexString}")
 
 			flexsliderDiv = null
-			slidesItems = []
-
-			oldCollection = null
+			slidesItems = {}
 
 			($scope, $element) ->
 				getTrackFromItem = (collectionItem) ->
@@ -28,28 +26,24 @@ angular.module('angular-flexslider', [])
 					# Generating tracking element
 					track = getTrackFromItem collectionItem
 					# See if it's unique
-					for item in slidesItems when item.track is track
+					if slidesItems[track]?
 						throw "Duplicates in a repeater are not allowed. Use 'track by' expression to specify unique keys."
-						break
 					# Create new item
 					childScope = $scope.$new()
 					childScope[indexString] = collectionItem
 					linker childScope, (clone) ->
 						slideItem =
-							track: track
 							collectionItem: collectionItem
 							childScope: childScope
 							element: clone
-						slidesItems.push slideItem
+						slidesItems[track] = slideItem
 						callback?(slideItem)
 
 				removeSlide = (collectionItem) ->
 					track = getTrackFromItem collectionItem
-					slideItem = item for item in slidesItems when item.track is track
+					slideItem = slidesItems[track]
 					return unless slideItem?
-					i = slidesItems.indexOf(slideItem)
-					return if i < 0
-					slidesItems = slidesItems.slice(i, 1)
+					delete slidesItems[track]
 					slideItem.childScope.$destroy()
 					slideItem
 
@@ -58,27 +52,31 @@ angular.module('angular-flexslider', [])
 					# If flexslider is already initialized, add or remove slides
 					if flexsliderDiv?
 						slider = flexsliderDiv.data 'flexslider'
+						currentSlidesLength = Object.keys(slidesItems).length
+						# Get an associative array of track to collection item
 						collection ?= []
-						toAdd = collection.filter (e) -> oldCollection.indexOf(e) < 0
-						toRemove = (oldCollection ? []).filter (e) -> collection.indexOf(e) < 0
-
+						trackCollection = {}
+						for c in collection
+							trackCollection[c] = getTrackFromItem c
+						# Generates arrays of collection items to add and remvoe
+						toAdd = (c for c in collection when not slidesItems[trackCollection[c]]?)
+						toRemove = (i.collectionItem for t, i of slidesItems when not trackCollection[t]?)
+						# Remove items
 						for e in toRemove
 							e = removeSlide e
 							slider.removeSlide e.element
-
+						# Add items
 						for e in toAdd
 							addSlide e, (item) ->
 								idx = collection.indexOf(e)
-								idx = undefined if idx == oldCollection?.length
+								idx = undefined if idx == currentSlidesLength
 								$scope.$evalAsync ->
 									slider.addSlide(item.element, idx)
-
-						oldCollection = collection.slice(0)
+						# Early exit
 						return
 
 					# Early exit if no collection
 					return unless collection?
-					oldCollection = collection.slice(0)
 
 					# Create flexslider container
 					slides = angular.element('<ul class="slides"></ul>')

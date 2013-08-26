@@ -8,15 +8,14 @@
       transclude: true,
       template: '<div class="flexslider-container"></div>',
       compile: function(element, attr, linker) {
-        var collectionString, flexsliderDiv, indexString, match, oldCollection, slidesItems, trackBy;
+        var collectionString, flexsliderDiv, indexString, match, slidesItems, trackBy;
 
         match = attr.slide.match(/^\s*(.+)\s+in\s+(.*?)(?:\s+track\s+by\s+(.+?))?\s*$/);
         indexString = match[1];
         collectionString = match[2];
         trackBy = angular.isDefined(match[3]) ? $parse(match[3]) : $parse("" + indexString);
         flexsliderDiv = null;
-        slidesItems = [];
-        oldCollection = null;
+        slidesItems = {};
         return function($scope, $element) {
           var addSlide, getTrackFromItem, removeSlide;
 
@@ -28,16 +27,11 @@
             return trackBy($scope, locals);
           };
           addSlide = function(collectionItem, callback) {
-            var childScope, item, track, _i, _len;
+            var childScope, track;
 
             track = getTrackFromItem(collectionItem);
-            for (_i = 0, _len = slidesItems.length; _i < _len; _i++) {
-              item = slidesItems[_i];
-              if (!(item.track === track)) {
-                continue;
-              }
+            if (slidesItems[track] != null) {
               throw "Duplicates in a repeater are not allowed. Use 'track by' expression to specify unique keys.";
-              break;
             }
             childScope = $scope.$new();
             childScope[indexString] = collectionItem;
@@ -45,62 +39,76 @@
               var slideItem;
 
               slideItem = {
-                track: track,
                 collectionItem: collectionItem,
                 childScope: childScope,
                 element: clone
               };
-              slidesItems.push(slideItem);
+              slidesItems[track] = slideItem;
               return typeof callback === "function" ? callback(slideItem) : void 0;
             });
           };
           removeSlide = function(collectionItem) {
-            var i, item, slideItem, track, _i, _len;
+            var slideItem, track;
 
             track = getTrackFromItem(collectionItem);
-            for (_i = 0, _len = slidesItems.length; _i < _len; _i++) {
-              item = slidesItems[_i];
-              if (item.track === track) {
-                slideItem = item;
-              }
-            }
+            slideItem = slidesItems[track];
             if (slideItem == null) {
               return;
             }
-            i = slidesItems.indexOf(slideItem);
-            if (i < 0) {
-              return;
-            }
-            slidesItems = slidesItems.slice(i, 1);
+            delete slidesItems[track];
             slideItem.childScope.$destroy();
             return slideItem;
           };
           return $scope.$watchCollection(collectionString, function(collection) {
-            var attrKey, attrVal, c, e, n, options, slider, slides, toAdd, toRemove, _i, _j, _k, _len, _len1, _len2;
+            var attrKey, attrVal, c, currentSlidesLength, e, i, n, options, slider, slides, t, toAdd, toRemove, trackCollection, _i, _j, _k, _l, _len, _len1, _len2, _len3;
 
             if (flexsliderDiv != null) {
               slider = flexsliderDiv.data('flexslider');
+              currentSlidesLength = Object.keys(slidesItems).length;
               if (collection == null) {
                 collection = [];
               }
-              toAdd = collection.filter(function(e) {
-                return oldCollection.indexOf(e) < 0;
-              });
-              toRemove = (oldCollection != null ? oldCollection : []).filter(function(e) {
-                return collection.indexOf(e) < 0;
-              });
-              for (_i = 0, _len = toRemove.length; _i < _len; _i++) {
-                e = toRemove[_i];
+              trackCollection = {};
+              for (_i = 0, _len = collection.length; _i < _len; _i++) {
+                c = collection[_i];
+                trackCollection[c] = getTrackFromItem(c);
+              }
+              toAdd = (function() {
+                var _j, _len1, _results;
+
+                _results = [];
+                for (_j = 0, _len1 = collection.length; _j < _len1; _j++) {
+                  c = collection[_j];
+                  if (slidesItems[trackCollection[c]] == null) {
+                    _results.push(c);
+                  }
+                }
+                return _results;
+              })();
+              toRemove = (function() {
+                var _results;
+
+                _results = [];
+                for (t in slidesItems) {
+                  i = slidesItems[t];
+                  if (trackCollection[t] == null) {
+                    _results.push(i.collectionItem);
+                  }
+                }
+                return _results;
+              })();
+              for (_j = 0, _len1 = toRemove.length; _j < _len1; _j++) {
+                e = toRemove[_j];
                 e = removeSlide(e);
                 slider.removeSlide(e.element);
               }
-              for (_j = 0, _len1 = toAdd.length; _j < _len1; _j++) {
-                e = toAdd[_j];
+              for (_k = 0, _len2 = toAdd.length; _k < _len2; _k++) {
+                e = toAdd[_k];
                 addSlide(e, function(item) {
                   var idx;
 
                   idx = collection.indexOf(e);
-                  if (idx === (oldCollection != null ? oldCollection.length : void 0)) {
+                  if (idx === currentSlidesLength) {
                     idx = void 0;
                   }
                   return $scope.$evalAsync(function() {
@@ -108,19 +116,17 @@
                   });
                 });
               }
-              oldCollection = collection.slice(0);
               return;
             }
             if (collection == null) {
               return;
             }
-            oldCollection = collection.slice(0);
             slides = angular.element('<ul class="slides"></ul>');
             flexsliderDiv = angular.element('<div class="flexslider"></div>');
             flexsliderDiv.append(slides);
             $element.append(flexsliderDiv);
-            for (_k = 0, _len2 = collection.length; _k < _len2; _k++) {
-              c = collection[_k];
+            for (_l = 0, _len3 = collection.length; _l < _len3; _l++) {
+              c = collection[_l];
               addSlide(c, function(item) {
                 return slides.append(item.element);
               });
