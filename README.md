@@ -49,6 +49,9 @@ can be declared like so:
 </flex-slider>
 ```
 
+The `slide` argument works similarly to `[ngRepeat]{http://docs.angularjs.org/api/ng.directive:ngRepeat}`
+in which you can specify a tracking expression.
+
 The `<li>` element should be defined and it can be used to specify `data-thumbs`
 attribute for FlexSlider thumbs or, for example, `ng-switch` to select the content
 markup.
