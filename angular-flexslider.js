@@ -100,26 +100,32 @@
                 }
                 return _results;
               })();
-              for (_j = 0, _len1 = toRemove.length; _j < _len1; _j++) {
-                e = toRemove[_j];
-                e = removeSlide(e);
-                slider.removeSlide(e.element);
-              }
-              for (_k = 0, _len2 = toAdd.length; _k < _len2; _k++) {
-                e = toAdd[_k];
-                addSlide(e, function(item) {
-                  var idx;
+              if ((toAdd.length === 1 && toRemove.length === 0) || toAdd.length === 0) {
+                for (_j = 0, _len1 = toRemove.length; _j < _len1; _j++) {
+                  e = toRemove[_j];
+                  e = removeSlide(e);
+                  slider.removeSlide(e.element);
+                }
+                for (_k = 0, _len2 = toAdd.length; _k < _len2; _k++) {
+                  e = toAdd[_k];
+                  addSlide(e, function(item) {
+                    var idx;
 
-                  idx = collection.indexOf(e);
-                  if (idx === currentSlidesLength) {
-                    idx = void 0;
-                  }
-                  return $scope.$evalAsync(function() {
-                    return slider.addSlide(item.element, idx);
+                    idx = collection.indexOf(e);
+                    if (idx === currentSlidesLength) {
+                      idx = void 0;
+                    }
+                    return $scope.$evalAsync(function() {
+                      return slider.addSlide(item.element, idx);
+                    });
                   });
-                });
+                }
+                return;
               }
-              return;
+            }
+            slidesItems = {};
+            if (flexsliderDiv != null) {
+              flexsliderDiv.remove();
             }
             slides = angular.element('<ul class="slides"></ul>');
             flexsliderDiv = angular.element('<div class="flexslider"></div>');
