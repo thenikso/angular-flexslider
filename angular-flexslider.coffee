@@ -49,6 +49,9 @@ angular.module('angular-flexslider', [])
 
 				$scope.$watchCollection collectionString, (collection) ->
 
+					# Early exit if no collection
+					return unless collection?.length
+
 					# If flexslider is already initialized, add or remove slides
 					if flexsliderDiv?
 						slider = flexsliderDiv.data 'flexslider'
@@ -74,9 +77,6 @@ angular.module('angular-flexslider', [])
 									slider.addSlide(item.element, idx)
 						# Early exit
 						return
-
-					# Early exit if no collection
-					return unless collection?
 
 					# Create flexslider container
 					slides = angular.element('<ul class="slides"></ul>')
