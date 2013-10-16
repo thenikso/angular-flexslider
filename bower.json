@@ -1,6 +1,6 @@
 {
   "name": "angular-flexslider",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "main": "./angular-flexslider.js",
   "dependencies": {
     "angular": "1.2.0-rc.2",
@@ -9,7 +9,7 @@
   },
   "readme": "angular-flexslider\n======================\n\nbower repo for angular-flexslider.js",
   "readmeFilename": "README.md",
-  "_id": "angular-flexslider@1.2.0",
+  "_id": "angular-flexslider@1.2.2",
   "description": "bower-angular-flexslider ======================",
   "repository": {
     "type": "git",
