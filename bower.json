@@ -5,7 +5,7 @@
   "dependencies": {
     "angular": "1.2.0rc1",
     "jquery": "2.0.2",
-    "flexslider": "*"
+    "flexslider": "latest"
   },
   "readme": "angular-flexslider\n======================\n\nbower repo for angular-flexslider.js",
   "readmeFilename": "README.md",
