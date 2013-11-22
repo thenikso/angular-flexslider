@@ -38,7 +38,7 @@ angular.module('myModule', ['angular-flexslider']);
 This module will define a single directive `flex-slider` that can be used either as
 an element or attribute.
 
-Assuming a `mySlide` variable is present in the current scope, a FlexSlider isntance
+Assuming a `mySlide` variable is present in the current scope, a FlexSlider instance
 can be declared like so:
 
 ```
