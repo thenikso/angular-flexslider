@@ -26,7 +26,7 @@
             locals[indexString] = collectionItem;
             return trackBy($scope, locals);
           };
-          addSlide = function(collectionItem, callback) {
+          addSlide = function(collectionItem, index, callback) {
             var childScope, track;
 
             track = getTrackFromItem(collectionItem);
@@ -35,6 +35,7 @@
             }
             childScope = $scope.$new();
             childScope[indexString] = collectionItem;
+            childScope['$index'] = index;
             return linker(childScope, function(clone) {
               var slideItem;
 
@@ -60,7 +61,7 @@
             return slideItem;
           };
           return $scope.$watchCollection(collectionString, function(collection) {
-            var attrKey, attrVal, c, currentSlidesLength, e, i, n, options, slider, slides, t, toAdd, toRemove, trackCollection, _i, _j, _k, _l, _len, _len1, _len2, _len3;
+            var attrKey, attrVal, c, currentSlidesLength, e, i, idx, n, options, slider, slides, t, toAdd, toRemove, trackCollection, _i, _j, _k, _l, _len, _len1, _len2, _len3;
 
             if (!(collection != null ? collection.length : void 0)) {
               return;
@@ -108,10 +109,8 @@
                 }
                 for (_k = 0, _len2 = toAdd.length; _k < _len2; _k++) {
                   e = toAdd[_k];
-                  addSlide(e, function(item) {
-                    var idx;
-
-                    idx = collection.indexOf(e);
+                  idx = collection.indexOf(e);
+                  addSlide(e, idx, function(item) {
                     if (idx === currentSlidesLength) {
                       idx = void 0;
                     }
@@ -131,9 +130,9 @@
             flexsliderDiv = angular.element('<div class="flexslider"></div>');
             flexsliderDiv.append(slides);
             $element.append(flexsliderDiv);
-            for (_l = 0, _len3 = collection.length; _l < _len3; _l++) {
-              c = collection[_l];
-              addSlide(c, function(item) {
+            for (i = _l = 0, _len3 = collection.length; _l < _len3; i = ++_l) {
+              c = collection[i];
+              addSlide(c, i, function(item) {
                 return slides.append(item.element);
               });
             }

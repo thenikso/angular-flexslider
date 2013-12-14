@@ -22,7 +22,7 @@ angular.module('angular-flexslider', [])
 					locals[indexString] = collectionItem
 					trackBy($scope, locals)
 
-				addSlide = (collectionItem, callback) ->
+				addSlide = (collectionItem, index, callback) ->
 					# Generating tracking element
 					track = getTrackFromItem collectionItem
 					# See if it's unique
@@ -31,6 +31,7 @@ angular.module('angular-flexslider', [])
 					# Create new item
 					childScope = $scope.$new()
 					childScope[indexString] = collectionItem
+					childScope['$index'] = index
 					linker childScope, (clone) ->
 						slideItem =
 							collectionItem: collectionItem
@@ -72,8 +73,8 @@ angular.module('angular-flexslider', [])
 								slider.removeSlide e.element
 							# Add items
 							for e in toAdd
-								addSlide e, (item) ->
-									idx = collection.indexOf(e)
+								idx = collection.indexOf(e)
+								addSlide e, idx, (item) ->
 									idx = undefined if idx == currentSlidesLength
 									$scope.$evalAsync ->
 										slider.addSlide(item.element, idx)
@@ -89,7 +90,7 @@ angular.module('angular-flexslider', [])
 					$element.append flexsliderDiv
 
 					# Generate slides
-					addSlide(c, (item) -> slides.append item.element) for c in collection
+					addSlide(c, i, (item) -> slides.append item.element) for c, i in collection
 
 					# Options are derived from flex-slider arguments
 					options = {}
