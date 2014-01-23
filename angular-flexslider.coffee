@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('angular-flexslider', [])
-	.directive 'flexSlider', ($parse, $timeout) ->
+	.directive 'flexSlider', ['$parse', '$timeout', ($parse, $timeout) ->
 		restrict: 'AE'
 		scope: no
 		replace: yes
@@ -112,3 +112,4 @@ angular.module('angular-flexslider', [])
 
 					# Running flexslider
 					$timeout (-> flexsliderDiv.flexslider options), 0
+        ]
