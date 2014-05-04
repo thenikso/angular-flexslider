@@ -12,10 +12,10 @@
 <body ng-controller="BasicSliderCtrl">
 
 	<flex-slider
-		slide="s in slideshow.slides"
+		slide="s in slideshow.slides track by s.id"
 		animation="slide">
 		<li>
-			<img ng-src="{{s}}">
+			<img ng-src="{{s.url}}">
 		</li>
 	</flex-slider>
 
@@ -31,13 +31,14 @@
 		.controller('BasicSliderCtrl', function($scope) {
 			$scope.slideshow = {};
 			$scope.slideshow.slides = [
-				'http://flexslider.woothemes.com/images/kitchen_adventurer_cheesecake_brownie.jpg',
-				'http://flexslider.woothemes.com/images/kitchen_adventurer_lemon.jpg',
-				'http://flexslider.woothemes.com/images/kitchen_adventurer_donut.jpg',
-				'http://flexslider.woothemes.com/images/kitchen_adventurer_caramel.jpg'
+				{ id: 1, url: 'http://flexslider.woothemes.com/images/kitchen_adventurer_cheesecake_brownie.jpg' },
+				{ id: 2, url: 'http://flexslider.woothemes.com/images/kitchen_adventurer_lemon.jpg' },
+				{ id: 3, url: 'http://flexslider.woothemes.com/images/kitchen_adventurer_donut.jpg' },
+				{ id: 4, url: 'http://flexslider.woothemes.com/images/kitchen_adventurer_caramel.jpg' }
 			];
+			var nextId = 5;
 			$scope.addRandomSlide = function () {
-				$scope.slideshow.slides.push('http://lorempixel.com/704/444/cats');
+				$scope.slideshow.slides.push({ id: nextId++, url: 'http://lorempixel.com/704/444/cats' });
 			};
 			$scope.removeRandomSlide = function () {
 				$scope.slideshow.slides.shift();

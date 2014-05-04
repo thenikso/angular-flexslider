@@ -75,7 +75,7 @@
               trackCollection = {};
               for (_i = 0, _len = collection.length; _i < _len; _i++) {
                 c = collection[_i];
-                trackCollection[c] = getTrackFromItem(c);
+                trackCollection[getTrackFromItem(c)] = c;
               }
               toAdd = (function() {
                 var _j, _len1, _results;
@@ -83,7 +83,7 @@
                 _results = [];
                 for (_j = 0, _len1 = collection.length; _j < _len1; _j++) {
                   c = collection[_j];
-                  if (slidesItems[trackCollection[c]] == null) {
+                  if (slidesItems[getTrackFromItem(c)] == null) {
                     _results.push(c);
                   }
                 }
