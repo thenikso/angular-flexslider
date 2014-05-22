@@ -14,7 +14,7 @@
 	<flex-slider
 		slide="s in slideshow.slides"
 		animation="slide"
-		start="slideshow.start()"
+		start="slideshow.start($slider)"
 		before="slideshow.before()"
 		after="slideshow.after()"
 		end="slideshow.end()">
@@ -46,7 +46,8 @@
 			];
 			var logId = 0;
 			$scope.slideshow.log = []
-			$scope.slideshow.start = function(){
+			$scope.slideshow.start = function(slider){
+				console.log(slider);
 				$scope.slideshow.log.push({ id: ++logId, message: 'start' });
 			}
 			$scope.slideshow.before = function(){
