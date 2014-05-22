@@ -106,10 +106,10 @@ angular.module('angular-flexslider', [])
 						if attrKey in ['start', 'before', 'after', 'end', 'added', 'removed']
 							options[attrKey] = do (attrVal) ->
 								f = $parse(attrVal)
-								-> $scope.$apply -> f($scope, {})
+								(slider) -> $scope.$apply -> f($scope, { '$slider': slider })
 							continue
 						options[attrKey] = attrVal
 
 					# Running flexslider
 					$timeout (-> flexsliderDiv.flexslider options), 0
-        ]
+				]
