@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app="MultipleSliders">
+
+<head>
+	<title>Angular FlexSlider Example - Multiple Sliders</title>
+	<link rel="stylesheet" type="text/css" href="../bower_components/flexslider/flexslider.css">
+	<style type="text/css">
+	.flexslider-container {
+		height: 300px;
+	}
+	</style>
+</head>
+
+<body ng-controller="MultipleSlidersCtrl">
+
+	<div ng-repeat="slideshow in slideshows">
+		<flex-slider
+			slide="s in slideshow track by $index"
+			animation="slide">
+			<li>
+				<img ng-src="{{s}}">
+			</li>
+		</flex-slider>
+	</div>
+
+	<script src="../bower_components/jquery/jquery.js"></script>
+	<script src="../bower_components/flexslider/jquery.flexslider.js"></script>
+	<script src="../bower_components/angular/angular.js"></script>
+	<script src="../angular-flexslider.js"></script>
+	<script type="text/javascript">
+	angular.module('MultipleSliders', ['angular-flexslider'])
+		.controller('MultipleSlidersCtrl', function ($scope) {
+			$scope.slideshows = [
+				[
+					'http://flexslider.woothemes.com/images/kitchen_adventurer_cheesecake_brownie.jpg',
+					'http://flexslider.woothemes.com/images/kitchen_adventurer_lemon.jpg',
+					'http://flexslider.woothemes.com/images/kitchen_adventurer_donut.jpg',
+					'http://flexslider.woothemes.com/images/kitchen_adventurer_caramel.jpg'
+				],
+				[
+					'http://flexslider.woothemes.com/images/kitchen_adventurer_cheesecake_brownie.jpg',
+					'http://flexslider.woothemes.com/images/kitchen_adventurer_lemon.jpg',
+					'http://flexslider.woothemes.com/images/kitchen_adventurer_donut.jpg',
+					'http://flexslider.woothemes.com/images/kitchen_adventurer_caramel.jpg'
+				]
+			];
+		});
+	</script>
+</body>
+
+</html>

@@ -9,17 +9,15 @@
         transclude: true,
         template: '<div class="flexslider-container"></div>',
         compile: function(element, attr, linker) {
-          var collectionString, flexsliderDiv, indexString, match, slidesItems, trackBy;
-
-          match = attr.slide.match(/^\s*(.+)\s+in\s+(.*?)(?:\s+track\s+by\s+(.+?))?\s*$/);
-          indexString = match[1];
-          collectionString = match[2];
-          trackBy = angular.isDefined(match[3]) ? $parse(match[3]) : $parse("" + indexString);
-          flexsliderDiv = null;
-          slidesItems = {};
           return function($scope, $element) {
-            var addSlide, getTrackFromItem, removeSlide;
+            var addSlide, collectionString, flexsliderDiv, getTrackFromItem, indexString, match, removeSlide, slidesItems, trackBy;
 
+            match = attr.slide.match(/^\s*(.+)\s+in\s+(.*?)(?:\s+track\s+by\s+(.+?))?\s*$/);
+            indexString = match[1];
+            collectionString = match[2];
+            trackBy = angular.isDefined(match[3]) ? $parse(match[3]) : $parse("" + indexString);
+            flexsliderDiv = null;
+            slidesItems = {};
             getTrackFromItem = function(collectionItem, index) {
               var locals;
 
