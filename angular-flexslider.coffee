@@ -17,14 +17,15 @@ angular.module('angular-flexslider', [])
 			slidesItems = {}
 
 			($scope, $element) ->
-				getTrackFromItem = (collectionItem) ->
+				getTrackFromItem = (collectionItem, index) ->
 					locals = {}
 					locals[indexString] = collectionItem
+					locals['$index'] = index
 					trackBy($scope, locals)
 
 				addSlide = (collectionItem, index, callback) ->
 					# Generating tracking element
-					track = getTrackFromItem collectionItem
+					track = getTrackFromItem collectionItem, index
 					# See if it's unique
 					if slidesItems[track]?
 						throw "Duplicates in a repeater are not allowed. Use 'track by' expression to specify unique keys."
@@ -40,8 +41,8 @@ angular.module('angular-flexslider', [])
 						slidesItems[track] = slideItem
 						callback?(slideItem)
 
-				removeSlide = (collectionItem) ->
-					track = getTrackFromItem collectionItem
+				removeSlide = (collectionItem, index) ->
+					track = getTrackFromItem collectionItem, index
 					slideItem = slidesItems[track]
 					return unless slideItem?
 					delete slidesItems[track]
@@ -49,7 +50,6 @@ angular.module('angular-flexslider', [])
 					slideItem
 
 				$scope.$watchCollection collectionString, (collection) ->
-
 					# Early exit if no collection
 					return unless collection?.length
 
@@ -60,21 +60,21 @@ angular.module('angular-flexslider', [])
 						# Get an associative array of track to collection item
 						collection ?= []
 						trackCollection = {}
-						for c in collection
-							trackCollection[getTrackFromItem(c)] = c
+						for c, i in collection
+							trackCollection[getTrackFromItem(c, i)] = c
 						# Generates arrays of collection items to add and remvoe
-						toAdd = (c for c in collection when not slidesItems[getTrackFromItem(c)]?)
+						toAdd = ({ value: c, index: i } for c, i in collection when not slidesItems[getTrackFromItem(c, i)]?)
 						toRemove = (i.collectionItem for t, i of slidesItems when not trackCollection[t]?)
 						# Workaround to a still unresolved problem in using flexslider.addSlide
 						if (toAdd.length == 1 and toRemove.length == 0) or toAdd.length == 0
 							# Remove items
 							for e in toRemove
-								e = removeSlide e
+								e = removeSlide e, collection.indexOf(e)
 								slider.removeSlide e.element
 							# Add items
 							for e in toAdd
-								idx = collection.indexOf(e)
-								addSlide e, idx, (item) ->
+								idx = e.index
+								addSlide e.value, idx, (item) ->
 									idx = undefined if idx == currentSlidesLength
 									$scope.$evalAsync ->
 										slider.addSlide(item.element, idx)
