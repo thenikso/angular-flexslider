@@ -20,17 +20,18 @@
           return function($scope, $element) {
             var addSlide, getTrackFromItem, removeSlide;
 
-            getTrackFromItem = function(collectionItem) {
+            getTrackFromItem = function(collectionItem, index) {
               var locals;
 
               locals = {};
               locals[indexString] = collectionItem;
+              locals['$index'] = index;
               return trackBy($scope, locals);
             };
             addSlide = function(collectionItem, index, callback) {
               var childScope, track;
 
-              track = getTrackFromItem(collectionItem);
+              track = getTrackFromItem(collectionItem, index);
               if (slidesItems[track] != null) {
                 throw "Duplicates in a repeater are not allowed. Use 'track by' expression to specify unique keys.";
               }
@@ -49,10 +50,10 @@
                 return typeof callback === "function" ? callback(slideItem) : void 0;
               });
             };
-            removeSlide = function(collectionItem) {
+            removeSlide = function(collectionItem, index) {
               var slideItem, track;
 
-              track = getTrackFromItem(collectionItem);
+              track = getTrackFromItem(collectionItem, index);
               slideItem = slidesItems[track];
               if (slideItem == null) {
                 return;
@@ -74,18 +75,21 @@
                   collection = [];
                 }
                 trackCollection = {};
-                for (_i = 0, _len = collection.length; _i < _len; _i++) {
-                  c = collection[_i];
-                  trackCollection[getTrackFromItem(c)] = c;
+                for (i = _i = 0, _len = collection.length; _i < _len; i = ++_i) {
+                  c = collection[i];
+                  trackCollection[getTrackFromItem(c, i)] = c;
                 }
                 toAdd = (function() {
                   var _j, _len1, _results;
 
                   _results = [];
-                  for (_j = 0, _len1 = collection.length; _j < _len1; _j++) {
-                    c = collection[_j];
-                    if (slidesItems[getTrackFromItem(c)] == null) {
-                      _results.push(c);
+                  for (i = _j = 0, _len1 = collection.length; _j < _len1; i = ++_j) {
+                    c = collection[i];
+                    if (slidesItems[getTrackFromItem(c, i)] == null) {
+                      _results.push({
+                        value: c,
+                        index: i
+                      });
                     }
                   }
                   return _results;
@@ -105,13 +109,13 @@
                 if ((toAdd.length === 1 && toRemove.length === 0) || toAdd.length === 0) {
                   for (_j = 0, _len1 = toRemove.length; _j < _len1; _j++) {
                     e = toRemove[_j];
-                    e = removeSlide(e);
+                    e = removeSlide(e, collection.indexOf(e));
                     slider.removeSlide(e.element);
                   }
                   for (_k = 0, _len2 = toAdd.length; _k < _len2; _k++) {
                     e = toAdd[_k];
-                    idx = collection.indexOf(e);
-                    addSlide(e, idx, function(item) {
+                    idx = e.index;
+                    addSlide(e.value, idx, function(item) {
                       if (idx === currentSlidesLength) {
                         idx = void 0;
                       }
