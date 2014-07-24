@@ -108,7 +108,9 @@
                   for (_j = 0, _len1 = toRemove.length; _j < _len1; _j++) {
                     e = toRemove[_j];
                     e = removeSlide(e, collection.indexOf(e));
+                    if(e) {
                     slider.removeSlide(e.element);
+                    }
                   }
                   for (_k = 0, _len2 = toAdd.length; _k < _len2; _k++) {
                     e = toAdd[_k];
