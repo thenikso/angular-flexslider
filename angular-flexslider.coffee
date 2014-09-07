@@ -9,7 +9,7 @@ angular.module('angular-flexslider', [])
 		template: '<div class="flexslider-container"></div>'
 		compile: (element, attr, linker) ->
 			($scope, $element) ->
-				match = attr.slide.match /^\s*(.+)\s+in\s+(.*?)(?:\s+track\s+by\s+(.+?))?\s*$/
+				match = (attr.slide || attr.flexSlide).match /^\s*(.+)\s+in\s+(.*?)(?:\s+track\s+by\s+(.+?))?\s*$/
 				indexString = match[1]
 				collectionString = match[2]
 				trackBy = if angular.isDefined(match[3]) then $parse(match[3]) else $parse("#{indexString}")
