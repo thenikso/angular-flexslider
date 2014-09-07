@@ -52,6 +52,8 @@ can be declared like so:
 The `slide` argument works similarly to [ngRepeat](http://docs.angularjs.org/api/ng.directive:ngRepeat)
 in which you can specify a tracking expression.
 
+If you are using `bootstrap-ui`, you can use `flex-slide` to avoid name conflict with the carousel.
+
 The `<li>` element should be defined and it can be used to specify `data-thumbs`
 attribute for FlexSlider thumbs or, for example, `ng-switch` to select the content
 markup.
