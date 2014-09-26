@@ -62,7 +62,8 @@ markup.
 
 FlexSlider initialization properties can be specified as attributes of `flex-slider`
 directive using dash separated attributes instead of cammel case.
-For example, the property `controlNav` can be specified via the attribute `control-nav`.
+
+**For example, the property `controlNav` can be specified via the attribute `control-nav`.**
 
 The FlexSlider callback API can also be used by specifying attributes with the
 appropriate API name containing [AngularJS expressions](http://docs.angularjs.org/guide/expression).
