@@ -106,7 +106,7 @@ angular.module('angular-flexslider', [])
 						if attrKey in ['start', 'before', 'after', 'end', 'added', 'removed']
 							options[attrKey] = do (attrVal) ->
 								f = $parse(attrVal)
-								(slider) -> $scope.$apply -> f($scope, { '$slider': slider })
+								(slider) -> $scope.$apply -> f($scope, { '$slider': { element: slider } })
 							continue
 						options[attrKey] = attrVal
 
