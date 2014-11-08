@@ -118,26 +118,36 @@
                   return;
                 }
               }
-              slidesItems = {};
-              if (flexsliderDiv != null) {
-                flexsliderDiv.remove();
-              }
-              slides = angular.element('<ul class="slides"></ul>');
-              flexsliderDiv = angular.element('<div class="flexslider"></div>');
-              flexsliderDiv.append(slides);
-              $element.append(flexsliderDiv);
-              for (i = _l = 0, _len3 = collection.length; _l < _len3; i = ++_l) {
-                c = collection[i];
-                addSlide(c, i, function(item) {
-                  return slides.append(item.element);
-                });
-              }
+
               options = {};
               for (attrKey in attr) {
                 attrVal = attr[attrKey];
                 if (attrKey.indexOf('$') === 0) {
                   continue;
                 }
+                
+                // check if sliderId attr exists and create the flexslider div with the slides
+                // attaching sliderId to flexsliderDiv
+                if (attrKey === 'sliderId') {
+                  
+                  slidesItems = {};
+                  if (flexsliderDiv != null) {
+                    flexsliderDiv.remove();
+                  }
+                  slides = angular.element('<ul class="slides"></ul>');
+                  var slider = '<div id="' + attrVal + '" class="flexslider"></div>'
+                  flexsliderDiv = angular.element(slider);
+                  flexsliderDiv.append(slides);
+                  $element.append(flexsliderDiv);
+                  for (i = _l = 0, _len3 = collection.length; _l < _len3; i = ++_l) {
+                    c = collection[i];
+                    addSlide(c, i, function(item) {
+                      return slides.append(item.element);
+                    });
+                  }
+                  continue;
+                }
+                
                 if (!isNaN(n = parseInt(attrVal))) {
                   options[attrKey] = n;
                   continue;
@@ -164,6 +174,22 @@
                 }
                 options[attrKey] = attrVal;
               }
+              // check if flexsliderDiv is null. If attr sliderId doesnt exists, this is the case
+              // so create this div and add the slides to it.          
+              if (flexsliderDiv === null) {
+                slidesItems = {};
+                slides = angular.element('<ul class="slides"></ul>');
+                flexsliderDiv = angular.element('<div class="flexslider"></div>');
+                flexsliderDiv.append(slides);
+                $element.append(flexsliderDiv);
+                for (i = _l = 0, _len3 = collection.length; _l < _len3; i = ++_l) {
+                  c = collection[i];
+                  addSlide(c, i, function(item) {
+                  return slides.append(item.element);
+                  });
+                }
+              }
+              
               return $timeout((function() {
                 return flexsliderDiv.flexslider(options);
               }), 0);
