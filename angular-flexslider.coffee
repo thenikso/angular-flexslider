@@ -108,6 +108,9 @@ angular.module('angular-flexslider', [])
 								f = $parse(attrVal)
 								(slider) -> $scope.$apply -> f($scope, { '$slider': { element: slider } })
 							continue
+						if attrKey in ['startAt']
+							options[attrKey] = $parse(attrVal)($scope)
+							continue
 						options[attrKey] = attrVal
 
 					# Running flexslider
