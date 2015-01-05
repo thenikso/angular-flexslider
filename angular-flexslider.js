@@ -164,6 +164,12 @@
                 }
                 options[attrKey] = attrVal;
               }
+              if (!options.sliderId && attr.id) {
+                options.sliderId = "" + attr.id + "-slider";
+              }
+              if (options.sliderId) {
+                flexsliderDiv.attr('id', options.sliderId);
+              }
               return $timeout((function() {
                 return flexsliderDiv.flexslider(options);
               }), 0);

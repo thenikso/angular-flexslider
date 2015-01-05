@@ -68,6 +68,10 @@ directive using dash separated attributes instead of cammel case.
 The FlexSlider callback API can also be used by specifying attributes with the
 appropriate API name containing [AngularJS expressions](http://docs.angularjs.org/guide/expression).
 
+Besides FlexSlider properties, one can specify a `slider-id` attribute to set an
+id to the actual slider. If not specified and an id attribute is specified to
+the `flex-slider` element, the actual slider will have an id of `<id>-slider`.
+
 The list of available properties (from [this page](http://www.woothemes.com/flexslider/#tabs-flexslider-info-tabber-tab-2)):
 
 ```javascript

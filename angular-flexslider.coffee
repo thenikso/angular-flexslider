@@ -110,6 +110,12 @@ angular.module('angular-flexslider', [])
 							continue
 						options[attrKey] = attrVal
 
+					# Apply sliderId if present
+					if not options.sliderId and attr.id
+						options.sliderId = "#{attr.id}-slider"
+					if options.sliderId
+					  flexsliderDiv.attr('id', options.sliderId)
+
 					# Running flexslider
 					$timeout (-> flexsliderDiv.flexslider options), 0
 				]
