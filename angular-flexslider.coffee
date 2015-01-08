@@ -49,10 +49,9 @@ angular.module('angular-flexslider', [])
 					slideItem.childScope.$destroy()
 					slideItem
 
-				$scope.$watchCollection collectionString, (collection) ->
+				$scope.$watchCollection collectionString, (collection, oldCollection) ->
 					# Early exit if no collection
-					return unless collection?.length
-
+					return unless (collection?.length or oldCollection?.length)
 					# If flexslider is already initialized, add or remove slides
 					if flexsliderDiv?
 						slider = flexsliderDiv.data 'flexslider'
