@@ -56,9 +56,9 @@
               slideItem.childScope.$destroy();
               return slideItem;
             };
-            return $scope.$watchCollection(collectionString, function(collection) {
+            return $scope.$watchCollection(collectionString, function(collection, oldCollection) {
               var attrKey, attrVal, c, currentSlidesLength, e, i, idx, n, options, slider, slides, t, toAdd, toRemove, trackCollection, _i, _j, _k, _l, _len, _len1, _len2, _len3;
-              if (!(collection != null ? collection.length : void 0)) {
+              if (!(collection != null ? collection.length : void 0) && !(oldCollection != null ? oldCollection.length : void 0)) {
                 return;
               }
               if (flexsliderDiv != null) {
