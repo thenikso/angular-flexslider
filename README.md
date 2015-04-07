@@ -18,7 +18,7 @@ In your document header include FlexSlider's CSS:
 <link rel="stylesheet" type="text/css" href="/components/flexslider/flexslider.css">
 ```
 
-Then include the scripts:
+Then include the scripts (order is relevant):
 
 ```
 <script src="/components/jquery/jquery.js"></script>
