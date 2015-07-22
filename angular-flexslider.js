@@ -100,7 +100,7 @@
                 if ((toAdd.length === 1 && toRemove.length === 0) || toAdd.length === 0) {
                   for (_j = 0, _len1 = toRemove.length; _j < _len1; _j++) {
                     e = toRemove[_j];
-                    e = removeSlide(e, collection.indexOf(e));
+                    e = removeSlide(e, oldCollection.indexOf(e));
                     if (e) {
                       slider.removeSlide(e.element);
                     }
