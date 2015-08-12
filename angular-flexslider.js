@@ -56,17 +56,11 @@
               slideItem.childScope.$destroy();
               return slideItem;
             };
-            return $scope.$watchCollection(collectionString, function(collection) {
-              var attrKey, attrVal, c, currentSlidesLength, e, i, idx, n, options, slider, slides, t, toAdd, toRemove, trackCollection, _i, _j, _k, _l, _len, _len1, _len2, _len3;
-              }
-              delete slidesItems[track];
-              slideItem.childScope.$destroy();
-              return slideItem;
-            };
             return $scope.$watchCollection(collectionString, function(collection, oldCollection) {
               var attrKey, attrVal, c, currentSlidesLength, e, i, idx, n, options, slider, slides, t, toAdd, toRemove, trackCollection, _i, _j, _k, _l, _len, _len1, _len2, _len3;
               if (!((collection != null ? collection.length : void 0) || (oldCollection != null ? oldCollection.length : void 0))) {
                 return;
+              }
               if (flexsliderDiv != null) {
                 slider = flexsliderDiv.data('flexslider');
                 currentSlidesLength = Object.keys(slidesItems).length;
@@ -107,7 +101,9 @@
                   for (_j = 0, _len1 = toRemove.length; _j < _len1; _j++) {
                     e = toRemove[_j];
                     e = removeSlide(e, collection.indexOf(e));
-                    slider.removeSlide(e.element);
+                    if (e) {
+                      slider.removeSlide(e.element);
+                    }
                   }
                   for (_k = 0, _len2 = toAdd.length; _k < _len2; _k++) {
                     e = toAdd[_k];
@@ -176,6 +172,7 @@
               }
               if (!options.sliderId && attr.id) {
                 options.sliderId = "" + attr.id + "-slider";
+              }
               if (options.sliderId) {
                 flexsliderDiv.attr('id', options.sliderId);
               }
