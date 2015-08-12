@@ -18,7 +18,7 @@ In your document header include FlexSlider's CSS:
 <link rel="stylesheet" type="text/css" href="/components/flexslider/flexslider.css">
 ```
 
-Then include the scripts:
+Then include the scripts (order is relevant):
 
 ```
 <script src="/components/jquery/jquery.js"></script>
@@ -56,14 +56,21 @@ The `<li>` element should be defined and it can be used to specify `data-thumbs`
 attribute for FlexSlider thumbs or, for example, `ng-switch` to select the content
 markup.
 
+<b>Warning to UI Bootstrap users:</b> You must use `flex-slide` to avoid name conflict with the carousel.
+
 ### Properties
 
 FlexSlider initialization properties can be specified as attributes of `flex-slider`
 directive using dash separated attributes instead of cammel case.
-For example, the property `controlNav` can be specified via the attribute `control-nav`.
+
+**For example, the property `controlNav` can be specified via the attribute `control-nav`.**
 
 The FlexSlider callback API can also be used by specifying attributes with the
 appropriate API name containing [AngularJS expressions](http://docs.angularjs.org/guide/expression).
+
+Besides FlexSlider properties, one can specify a `slider-id` attribute to set an
+id to the actual slider. If not specified and an id attribute is specified to
+the `flex-slider` element, the actual slider will have an id of `<id>-slider`.
 
 The list of available properties (from [this page](http://www.woothemes.com/flexslider/#tabs-flexslider-info-tabber-tab-2)):
 

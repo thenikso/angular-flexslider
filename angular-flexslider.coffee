@@ -9,7 +9,7 @@ angular.module('angular-flexslider', [])
 		template: '<div class="flexslider-container"></div>'
 		compile: (element, attr, linker) ->
 			($scope, $element) ->
-				match = attr.slide.match /^\s*(.+)\s+in\s+(.*?)(?:\s+track\s+by\s+(.+?))?\s*$/
+				match = (attr.slide || attr.flexSlide).match /^\s*(.+)\s+in\s+(.*?)(?:\s+track\s+by\s+(.+?))?\s*$/
 				indexString = match[1]
 				collectionString = match[2]
 				trackBy = if angular.isDefined(match[3]) then $parse(match[3]) else $parse("#{indexString}")
@@ -49,10 +49,9 @@ angular.module('angular-flexslider', [])
 					slideItem.childScope.$destroy()
 					slideItem
 
-				$scope.$watchCollection collectionString, (collection) ->
+				$scope.$watchCollection collectionString, (collection, oldCollection) ->
 					# Early exit if no collection
-					return unless collection?.length
-
+					return unless (collection?.length or oldCollection?.length)
 					# If flexslider is already initialized, add or remove slides
 					if flexsliderDiv?
 						slider = flexsliderDiv.data 'flexslider'
@@ -70,7 +69,7 @@ angular.module('angular-flexslider', [])
 							# Remove items
 							for e in toRemove
 								e = removeSlide e, collection.indexOf(e)
-								slider.removeSlide e.element
+								slider.removeSlide e.element if e
 							# Add items
 							for e in toAdd
 								idx = e.index
@@ -106,9 +105,18 @@ angular.module('angular-flexslider', [])
 						if attrKey in ['start', 'before', 'after', 'end', 'added', 'removed']
 							options[attrKey] = do (attrVal) ->
 								f = $parse(attrVal)
-								(slider) -> $scope.$apply -> f($scope, { '$slider': slider })
+								(slider) -> $scope.$apply -> f($scope, { '$slider': { element: slider } })
+							continue
+						if attrKey in ['startAt']
+							options[attrKey] = $parse(attrVal)($scope)
 							continue
 						options[attrKey] = attrVal
+
+					# Apply sliderId if present
+					if not options.sliderId and attr.id
+						options.sliderId = "#{attr.id}-slider"
+					if options.sliderId
+					  flexsliderDiv.attr('id', options.sliderId)
 
 					# Running flexslider
 					$timeout (-> flexsliderDiv.flexslider options), 0
