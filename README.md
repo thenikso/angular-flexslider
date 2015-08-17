@@ -56,7 +56,15 @@ The `<li>` element should be defined and it can be used to specify `data-thumbs`
 attribute for FlexSlider thumbs or, for example, `ng-switch` to select the content
 markup.
 
-<b>Warning to UI Bootstrap users:</b> You must use `flex-slide` to avoid name conflict with the carousel.
+<b>Warning to UI Bootstrap users:</b> You must use the `flex-slide` argument instead of `slide` to avoid name conflict with the carousel. This is:
+
+```
+<flex-slider flex-slide="s in mySlides">
+	<li>
+		<img ng-src="{{s}}">
+	</li>
+</flex-slider>
+```
 
 ### Properties
 
