@@ -12,7 +12,7 @@
         compile: function(element, attr, linker) {
           return function($scope, $element) {
             var addSlide, collectionString, flexsliderDiv, getTrackFromItem, indexString, match, removeSlide, slidesItems, trackBy;
-            match = (attr.slide || attr.flexSlide).match(/^\s*(.+)\s+in\s+(.*?)(?:\s+track\s+by\s+(.+?))?\s*$/);
+            match = (attr.slide || attr.flexSlide || attr.flexslide).match(/^\s*(.+)\s+in\s+(.*?)(?:\s+track\s+by\s+(.+?))?\s*$/);
             indexString = match[1];
             collectionString = match[2];
             trackBy = angular.isDefined(match[3]) ? $parse(match[3]) : $parse("" + indexString);
