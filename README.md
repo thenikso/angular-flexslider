@@ -124,6 +124,8 @@ controlsContainer: "",          //{UPDATED} Selector: USE CLASS SELECTOR. Declar
 manualControls: "",             //Selector: Declare custom control navigation. Examples would be ".flex-control-nav li" or "#tabs-nav li img", etc. The number of elements in your controlNav should match the number of slides/tabs.
 sync: "",                       //{NEW} Selector: Mirror the actions performed on this slider with another slider. Use with care.
 asNavFor: "",                   //{NEW} Selector: Internal property exposed for turning the slider into a thumbnail navigation for another slider
+customDirectionNav: "",         //jQuery Object/Selector Container the custom navigation markup works with.
+
 
 // Carousel Options
 itemWidth: 0,                   //{NEW} Integer: Box-model width of individual carousel items, including horizontal borders and padding.
