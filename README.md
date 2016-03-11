@@ -2,6 +2,9 @@
 
 Provides a `flex-slider` directive to include and initialize a [FlexSlider](http://flexslider.woothemes.com/) slideshow in an [AngularJS](http://angularjs.org/) application.
 
+:warning: **This project is no longer activelly maintained!** :warning:
+If you feel like inheriting it please contact the author.
+
 ## Intallation
 
 To install using [Bower](http://bower.io):
