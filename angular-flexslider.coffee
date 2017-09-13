@@ -65,7 +65,7 @@ angular.module('angular-flexslider', [])
 						toAdd = ({ value: c, index: i } for c, i in collection when not slidesItems[getTrackFromItem(c, i)]?)
 						toRemove = (i.collectionItem for t, i of slidesItems when not trackCollection[t]?)
 						# Workaround to a still unresolved problem in using flexslider.addSlide
-						if (toAdd.length == 1 and toRemove.length == 0) or toAdd.length == 0
+						if (toAdd.length >= 1 and toRemove.length == 0) or toAdd.length == 0
 							# Remove items
 							for e in toRemove
 								e = removeSlide e, collection.indexOf(e)
@@ -74,7 +74,7 @@ angular.module('angular-flexslider', [])
 							for e in toAdd
 								idx = e.index
 								addSlide e.value, idx, (item) ->
-									idx = undefined if idx == currentSlidesLength
+									idx = undefined if idx >= currentSlidesLength
 									$scope.$evalAsync ->
 										slider.addSlide(item.element, idx)
 							# Early exit

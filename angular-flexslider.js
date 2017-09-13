@@ -97,7 +97,7 @@
                   }
                   return _results;
                 })();
-                if ((toAdd.length === 1 && toRemove.length === 0) || toAdd.length === 0) {
+                if ((toAdd.length >= 1 && toRemove.length === 0) || toAdd.length === 0) {
                   for (_j = 0, _len1 = toRemove.length; _j < _len1; _j++) {
                     e = toRemove[_j];
                     e = removeSlide(e, collection.indexOf(e));
@@ -109,7 +109,7 @@
                     e = toAdd[_k];
                     idx = e.index;
                     addSlide(e.value, idx, function(item) {
-                      if (idx === currentSlidesLength) {
+                      if (idx >= currentSlidesLength) {
                         idx = void 0;
                       }
                       return $scope.$evalAsync(function() {
