@@ -68,7 +68,7 @@ angular.module('angular-flexslider', [])
 						if (toAdd.length == 1 and toRemove.length == 0) or toAdd.length == 0
 							# Remove items
 							for e in toRemove
-								e = removeSlide e, collection.indexOf(e)
+								e = removeSlide e, oldCollection.indexOf(e)
 								slider.removeSlide e.element if e
 							# Add items
 							for e in toAdd
